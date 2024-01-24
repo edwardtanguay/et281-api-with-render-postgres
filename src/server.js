@@ -1,5 +1,6 @@
 import express from 'express';
 import prisma from "./db.js";
+import { addSkill } from './handlers.js';
 
 const app = express();
 app.use(express.json());
@@ -22,7 +23,7 @@ app.get('/skills', async (req, res) => {
 app.post('/skills', async (req, res) => {
 	const _skill = req.body;
 	try {
-		const skill = await prisma.skill.create({ data: _skill });
+		const skill = addSkill(_skill);
 		res.status(201);
 		res.json({ data: skill });
 	} catch (e) {
