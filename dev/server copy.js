@@ -1,5 +1,5 @@
 import express from 'express';
-import prisma from "./db.js";
+import prisma from "../src/db.js";
 
 const app = express();
 app.use(express.json());
@@ -21,12 +21,14 @@ app.get('/skills', async (req, res) => {
 
 app.post('/skills', async (req, res) => {
 	const _skill = req.body;
+	console.log(_skill);
 	try {
-		const skill = await prisma.skill.create({ data: _skill });
+		const skill = await prisma.skill.create(_skill);
 		res.status(201);
 		res.json({ data: skill });
 	} catch (e) {
 		res.status(400);
+		console.log(e);
 		res.json({ message: "there was an error" });
 	}
 });
