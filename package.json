@@ -1,0 +1,16 @@
+{
+	"name": "et281-api-with-render-postgres",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"dev": "node src/server.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.18.2"
+	}
+}
