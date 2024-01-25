@@ -24,8 +24,13 @@ app.post('/skills', async (req, res) => {
 	const _skill = req.body;
 	try {
 		const skill = addSkill(_skill);
-		res.status(201);
-		res.json({ data: skill });
+		if (skill !== null) {
+			res.status(201);
+			res.json({ data: skill });
+		} else {
+			res.status(400);
+			res.json({ message: "there was an error" });
+		}
 	} catch (e) {
 		res.status(400);
 		res.json({ message: "there was an error" });
