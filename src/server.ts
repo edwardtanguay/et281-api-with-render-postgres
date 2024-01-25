@@ -2,6 +2,9 @@ import express from 'express';
 import prisma from "./db.js";
 import { addSkill } from './handlers.js';
 import { INewSkill, ISkill } from './interfaces.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
@@ -22,19 +25,23 @@ app.get('/skills', async (req, res) => {
 });
 
 app.post('/skills', async (req, res) => {
-	const _skill: INewSkill = req.body;
-	try {
-		const skill = addSkill(_skill);
-		if (skill !== null) {
-			res.status(201);
-			res.json({ data: skill });
-		} else {
+	if (process.env.API_ENVIRONMENT === 'development') {
+		const _skill: INewSkill = req.body;
+		try {
+			const skill = await addSkill(_skill);
+			if (skill !== null) {
+				res.status(201);
+				res.json(skill);
+			} else {
+				res.status(400);
+				res.json({ message: "there was an error" });
+			}
+		} catch (e) {
 			res.status(400);
 			res.json({ message: "there was an error" });
 		}
-	} catch (e) {
-		res.status(400);
-		res.json({ message: "there was an error" });
+	} else {
+		res.status(401).send('not authorized');
 	}
 });
 
