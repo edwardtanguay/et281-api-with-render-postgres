@@ -1,6 +1,7 @@
 import express from 'express';
 import prisma from "./db.js";
 import { addSkill } from './handlers.js';
+import { INewSkill, ISkill } from './interfaces.js';
 
 const app = express();
 app.use(express.json());
@@ -10,18 +11,18 @@ app.get('/', (req, res) => {
 	res.send(`
 <h1>Skills API</h1>
 <ul>
-	<li><a href="/skills">/skills</a> - web developer skills 222</li>
+	<li><a href="/skills">/skills</a> - web developer skills</li>
 </ul>
 	`);
 });
 
 app.get('/skills', async (req, res) => {
-	const skills = await prisma.skill.findMany();
+	const skills: ISkill[] = await prisma.skill.findMany();
 	res.json(skills);
 });
 
 app.post('/skills', async (req, res) => {
-	const _skill = req.body;
+	const _skill: INewSkill = req.body;
 	try {
 		const skill = addSkill(_skill);
 		if (skill !== null) {

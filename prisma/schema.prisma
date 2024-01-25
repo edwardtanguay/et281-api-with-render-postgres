@@ -11,10 +11,10 @@ datasource db {
 }
 
 model Skill {
-	id						String		@id @default(uuid())
-	createdAt			DateTime	@default(now())
-	idCode				String		@unique
-	name					String
-	url						String
+	id				String		@id @default(uuid())
+	createAt		DateTime	@default(now())
+	idCode			String		@unique
+	name			String
+	url				String
 	description		String
 }
